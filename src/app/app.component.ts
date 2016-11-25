@@ -17,7 +17,6 @@ export class AppComponent {
     const start$ = Observable.fromEvent(startButton, 'click')
     const interval$ = Observable.interval(1000);
     const stop$ = Observable.fromEvent(stopButton,'click');
-
     const intervalThatStops$ = interval$.takeUntil(stop$);
 
     let observable = start$
