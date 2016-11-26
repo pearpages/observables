@@ -8,39 +8,31 @@ import { Observable } from 'rxjs/Rx';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  
+  private interval$;
+  private startSubscription;
+
+  makeLogger (index: number) {
+    return ((x) => console.log('subscription '+index+':'+x))
+  }
+
+  start() {
+    if(!this.startSubscription) {
+      this.startSubscription = this.interval$
+        .subscribe( (x) => console.log(x));
+    }
+  } 
 
   ngOnInit() {
+    this.interval$ = Observable.interval(1000);
+
     const startButton = document.querySelector('#start');
-    const stopButton = document.querySelector('#stop');
-    
-    const start$ = Observable.fromEvent(startButton, 'click')
+
+    const start$ = Observable.fromEvent(startButton,'click');
     const interval$ = Observable.interval(1000);
-    const stop$ = Observable.fromEvent(stopButton,'click');
-    const intervalThatStops$ = interval$.takeUntil(stop$);
+    const startInterval$ = start$.switchMapTo(interval$);
 
-    let observable = start$
-      .switchMap((event) => interval$);
-
-    let subscription0 = interval$
-      .takeUntil(stop$)
-      .subscribe( (x) => console.log('subscription 0: '+x))
-    let subscription1 = observable
-      .takeUntil(stop$)
-      .subscribe( (x) => console.log('subscription 1: '+x));
-    let subscription2 = observable
-      .takeUntil(stop$)
-      .subscribe( (x) => console.log('subscription 2: '+x));
-    let subscription3 = observable
-      .takeUntil(stop$)
-      .subscribe( (x) => console.log('subscription 3: '+x));
-
-
-    let subscription4 = intervalThatStops$.subscribe( (x) => console.log('subscription 4: '+x));
-
-    let subscription5 = start$.switchMapTo(intervalThatStops$).scan( (accumulator) => {
-      return {count: accumulator.count + 1} },
-        {count: 0}
-      ).subscribe( (x) => console.log(x));
+    const subs1 = startInterval$
+      .subscribe( (x) => console.log(x) );
   }
 }
