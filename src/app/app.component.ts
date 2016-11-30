@@ -17,20 +17,38 @@ export class AppComponent {
     const startButton = document.querySelector('#start');
     const stopButton = document.querySelector('#stop');
     const resetButton = document.querySelector('#reset');
+    const halfButton = document.querySelector('#half');
+    const quarterButton = document.querySelector('#quarter');
 
     const start$ = Observable.fromEvent(startButton, 'click');
     const stop$ = Observable.fromEvent(stopButton, 'click');
     const reset$ = Observable.fromEvent(resetButton,'click');
+    const half$ = Observable.fromEvent(halfButton,'click');
+    const quarter$ = Observable.fromEvent(quarterButton,'click');
+
     const interval$ = Observable.interval(1000);
     const intervalThatStops$ = interval$.takeUntil(stop$);
+
+    const starters$ = Observable.merge(
+      start$.mapTo(1000),
+      half$.mapTo(500),
+      quarter$.mapTo(250)
+    )
+
+    const intervalActions = (time) => Observable.merge(
+      Observable.interval(time)
+        .takeUntil(stop$).mapTo(inc),
+        reset$.mapTo(reset)
+    );
 
     const inc = (acc) => ({ count: acc.count + 1 });
     const reset = (acc) => ({ count: 0});
     const incOrReset$ =  Observable.merge(intervalThatStops$.mapTo(inc),reset$.mapTo(reset));
 
-    const startIntervalThatStopsAndRestarts$ = start$.switchMapTo(incOrReset$)
-      .scan( (acc,curr) => {return curr(acc);})
-      .subscribe((x) => console.log(x));
+    starters$
+      .switchMap(intervalActions)
+      .scan((acc,curr) => curr(acc))
+      .subscribe( (x) => console.log(x) );
       
   }
 }
