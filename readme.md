@@ -1,6 +1,6 @@
 # Observables Examples
 
-## From a Button
+## From a Button or Input
 
 ```html
 <button id="start">Start</button>
@@ -10,6 +10,12 @@
 const startButton = document.querySelector('#start');
 
 Observable.fromEvent(startButton,'click');
+```
+
+```javascript
+const input$ = Observable.fromEvent(document.querySelector('#text'),'input')
+    .map( $event => $event['target']['value'])
+    .subscribe( (x) => console.log(x));
 ```
 
 ---
@@ -84,3 +90,5 @@ const startIntervalThatStopsAndRestarts$ = start$.switchMapTo(incOrReset$)
     .scan( (acc,curr) => {return curr(acc);})
     .subscribe((x) => console.log(x));
 ```
+
+---

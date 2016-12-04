@@ -50,5 +50,9 @@ export class AppComponent {
       .scan((acc,curr) => curr(acc))
       .subscribe( (x) => console.log(x) );
       
+
+    const input$ = Observable.fromEvent(document.querySelector('#text'),'input')
+      .map( $event => $event['target']['value'])
+      .subscribe( (x) => console.log(x));
   }
 }
