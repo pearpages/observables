@@ -92,3 +92,14 @@ const startIntervalThatStopsAndRestarts$ = start$.switchMapTo(incOrReset$)
 ```
 
 ---
+
+## combineLatest
+
+```javascript
+Observable.combineLatest(
+    timer$,
+    input$,
+    (timer, input) => ({count: timer.count, text: input})
+    .subscribe( (x) => console.log(x) )
+);
+```
