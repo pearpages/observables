@@ -133,7 +133,7 @@ Observable.combineLatest(
          (x) => console.log(x),
          err => console.err(err),
          () => console.log('complete)
-    );
+    )
 );
 ```
 
