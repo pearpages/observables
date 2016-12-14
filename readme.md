@@ -1,5 +1,46 @@
 # Observables Examples
 
+## a Complex Examples
+
+```javascript
+this._route.params.switchMap((params: Params) => {
+    document.body.scrollTop = 0;
+    this.slug = params['slug'];
+
+    return this._testo.getChallengeDetails()
+})
+.switchMap((res) => {
+    this.countries = res.groups;
+    let country = res.groups.find((v) => v.slug === this.slug);
+    this.id = country.id;
+    this.flagUrl = country.image;
+    this.name = country.name;
+
+    return Observable.merge(
+        this._testo.getStats(this.id).map(res => {
+        this.globalStats = res;
+        return 'globalStats';
+        }),
+        this._testo.getChallengeDetails(this.id).map(res => {
+        this.details = res;
+        return 'details';
+        }),
+        this._testo.getCountryRanking(this.id).map(res => {
+        this.ranking = res;
+        return 'ranking';
+        }),
+        this._testo.getChallenges(this.id).map(res => {
+        this.challenges = res;
+        return 'challenges';
+        }))
+})
+.subscribe((res) => {
+console.log('result got: '+res);
+});
+```
+
+---
+
 ## From a Button or Input
 
 ```html
