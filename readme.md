@@ -179,3 +179,22 @@ Observable.combineLatest(
 ```
 
 ----
+
+## reduce
+
+```javascript
+Observable.combineLatest(
+    timer$,
+    input$,
+    (timer, input) => ({count: timer.count, text: input})
+    .takeWhile( (data) => data.count <= 3)
+    .filter( (data) => data.count === parseInt(data.text))
+    .reduce( (acc, curr) => acc +1, 0) // when it finishes
+    // it will finish when takeWhile happens
+    .subscribe(
+         (x) => console.log(x),
+         err => console.err(err),
+         () => console.log('complete)
+    )
+);
+```
