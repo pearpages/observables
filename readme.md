@@ -173,7 +173,7 @@ Observable.combineLatest(
     .subscribe(
          (x) => console.log(x),
          err => console.err(err),
-         () => console.log('complete)
+         () => console.log('complete')
     )
 );
 ```
@@ -194,7 +194,7 @@ Observable.combineLatest(
     .subscribe(
          (x) => console.log(x),
          err => console.err(err),
-         () => console.log('complete)
+         () => console.log('complete')
     )
 );
 ```
