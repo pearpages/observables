@@ -269,3 +269,9 @@ timer$
     )
 );
 ```
+
+---
+
+## share
+
+Returns an observable sequence that shares a single subscription to the underlying sequence.
