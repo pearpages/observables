@@ -244,3 +244,28 @@ timer$
     )
 );
 ```
+
+---
+
+## repeat
+
+It repeats the stream so the subscriptions never finish. 
+
+**Warning** usually it's used just before the subscription.
+
+```javascript
+timer$
+    .takeWhile( (data) => data.count <= 3)
+    .withLatestFrom(
+        input$,
+        (timer, input) => ({count: timer.count, text: input})
+    .filter( (data) => data.count === parseInt(data.text))
+    .reduce( (acc, curr) => acc +1, 0) 
+    .repeat() // <-- is re-subscribing to the same stream
+    .subscribe(
+         (x) => console.log(x),
+         err => console.err(err),
+         () => console.log('complete')
+    )
+);
+```
