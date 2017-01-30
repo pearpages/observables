@@ -182,11 +182,37 @@ Observable.combineLatest(
 
 ## reduce
 
+Runs on complete.
+
 ```javascript
 Observable.combineLatest(
     timer$,
     input$,
     (timer, input) => ({count: timer.count, text: input})
+    .takeWhile( (data) => data.count <= 3)
+    .filter( (data) => data.count === parseInt(data.text))
+    .reduce( (acc, curr) => acc +1, 0) // when it finishes
+    // it will finish when takeWhile happens
+    .subscribe(
+         (x) => console.log(x),
+         err => console.err(err),
+         () => console.log('complete')
+    )
+);
+```
+
+---
+
+## do
+
+Something that is going to happen outside our stream.
+
+```javascript
+Observable.combineLatest(
+    timer$,
+    input$,
+    (timer, input) => ({count: timer.count, text: input})
+    .do( (x) => console.log(x) ) // <--
     .takeWhile( (data) => data.count <= 3)
     .filter( (data) => data.count === parseInt(data.text))
     .reduce( (acc, curr) => acc +1, 0) // when it finishes
