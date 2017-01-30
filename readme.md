@@ -224,3 +224,23 @@ Observable.combineLatest(
     )
 );
 ```
+
+---
+
+## withLatestFrom
+
+```javascript
+timer$
+    .takeWhile( (data) => data.count <= 3)
+    .withLatestFrom(
+        input$,
+        (timer, input) => ({count: timer.count, text: input})
+    .filter( (data) => data.count === parseInt(data.text))
+    .reduce( (acc, curr) => acc +1, 0) 
+    .subscribe(
+         (x) => console.log(x),
+         err => console.err(err),
+         () => console.log('complete')
+    )
+);
+```
