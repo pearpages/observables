@@ -11,3 +11,12 @@ var observable = Rx.Observable.create(function (observer) {
 observable.subscribe(function (v) {
     console.log(v);
 });
+
+// or we can create an observer
+var observer = Rx.Observer.create(
+    function onNext(x) { console.log('Next: '+x); },
+    function onError(err) { console.log('Error: '+ err)},
+    function onCompleted() { console.log('Completed')}
+);
+
+observable.subscribe(observer);

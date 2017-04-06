@@ -29,3 +29,13 @@ Rx.Observable.just('Hello World!').subscribe(function(value) { console.log(value
 });
 ```
 
+## Creating Observers
+
+Observers listen to observables.
+
+Observers have three methods:
+
++ onNext
++ onCompleted
++ onError
+
