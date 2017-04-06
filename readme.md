@@ -1,5 +1,11 @@
 # RxJS Observables
 
+An Observable represents a stream of data. Programs can be expressed largely as streams of data.
+
++ Spreadsheets Are Reactive
++ Mouse is a stream of values
+
+
 ## Resources
 
 + https://github.com/Reactive-Extensions/RxJS/releases/latest 5. https://github.com/Reactive-Extensions/RxJS

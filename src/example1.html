@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <script src="../node_modules/rx/dist/rx.all.js"></script>
+</head>
+
+<body>
+    <p>Get the first 10 clicks on the right side of the screen.</p>
+    <script>
+        Rx.Observable.fromEvent(document, 'click')
+            .filter(function (c) {
+                return c.clientX > window.innerWidth / 2;
+            })
+            .take(10)
+            .subscribe(
+                function (c) {
+                    var body = document.getElementsByTagName("BODY")[0];
+                    body.innerHTML += '<p>'+c.clientX+' '+c.clientY+'</p>';
+                });
+    </script>
+
+</body>
+
+</html>
