@@ -7,6 +7,8 @@
 <body>
     <p>Ajax call example</p>
     <script>
+        // Observables don’t do anything until at least one Observer sub- scribes to them.
+
         function get(url) {
             return Rx.Observable.create(function (observer) {
                 // Make a traditional Ajax request
