@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <script src="../node_modules/rx/dist/rx.all.js"></script>
+    <script src="../node_modules/rx-dom/dist/rx.dom.js"></script>
+</head>
+
+<body>
+    <p>Get the first 10 clicks on the right side of the screen.</p>
+    <script>
+        Rx.DOM.get('/api/contents.json')
+            .subscribe(
+                function onNext(data) {
+                    document.getElementsByTagName('body')[0].innerHTML += '<pre>'+data.response+'</pre>';
+                },
+                function onError(err) {
+                    console.error(err);
+                }
+            )
+    </script>
+
+</body>
+
+</html>
