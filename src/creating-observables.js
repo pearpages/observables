@@ -20,3 +20,12 @@ var observer = Rx.Observer.create(
 );
 
 observable.subscribe(observer);
+
+// Result expected in console:
+// Simon
+// Jen
+// Sergi
+// Next: Simon
+// Next: Jen
+// Next: Sergi
+// Completed
