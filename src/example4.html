@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script src="../node_modules/rx/dist/rx.all.js"></script>
+</head>
+
+<body>
+    <p>Creating Observables from Javascript Events</p>
+    <script>
+        var allMoves = Rx.Observable.fromEvent(document, 'mousemove');
+
+        allMoves.subscribe(function (e) {
+            console.log(e.clientX, e.clientY);
+        })
+
+        var movesOnTheRight = allMoves.filter(function (e) {
+            return e.clientX > window.innerWidth / 2;
+        });
+
+        var movesOnTheLeft = allMoves.filter(function (e) {
+            return e.clientX < window.innerWidth / 2;
+        });
+
+        function addToBody(text) {
+            var body = document.getElementsByTagName('body')[0];
+            body.innerHTML += text + ' ';
+        }
+
+        movesOnTheRight.subscribe(function (e) {
+            addToBody(e.clientX);
+            console.log('Mouse is on the right:',e.clientX);
+        });
+
+        movesOnTheLeft.subscribe(function (e) {
+            addToBody(e.clientX);
+            console.log('Mouse is on the left:',e.clientX);
+        });
+    </script>
+
+</body>
+
+</html>
