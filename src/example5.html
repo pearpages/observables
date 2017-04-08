@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <script src="../node_modules/rx/dist/rx.all.min.js"></script>
+    <script src="../node_modules/rx-dom/dist/rx.dom.min.js"></script>
+</head>
+
+<body>
+    <p>Retrying ajax if failing.</p>
+
+    <script>
+        Rx.DOM.get('/api/contents.json')
+            .retry(5)
+            .subscribe(
+            function (xhr) {
+                document.getElementsByTagName('body')[0].innerHTML += '<pre>'+xhr.response+'</pre>';
+            },
+            function (err) {
+                console.error('ERROR: ', err)
+            }
+            );
+    </script>
+</body>
+
+</html>
