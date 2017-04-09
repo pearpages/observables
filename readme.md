@@ -52,3 +52,10 @@ Chaining looks similar in Observables and in arrays; there are even methods like
 ## RxJS's Subject Class
 
 > A **Subject** is a type that implements both Observer and Observable types. As an Observer, it can subscribe to Observables, and as an Observable it can produce values and have Observers subscribe to it.
+
+### AsyncSubject
+
+AsyncSubject emits the last value of a sequence only if the sequence completes. This value is then cached forever, and any Observer that subscribes after the value has been emitted will receive it right away.
+
+> AsyncSubject is convenient for asynchronous operations that return a single value, such as **Ajax** requests.
+
