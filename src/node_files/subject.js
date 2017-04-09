@@ -36,3 +36,5 @@ setTimeout(function () {
 // onNext: Interval message #1
 // onNext: Interval message #2
 // onCompleted
+
+// The values from the Observable come later because they are asynchronous, whereas we made the Subject’s own values immediate. Notice that even if we tell the source Observable to take the first five values, the output shows only the first three. That’s because after one second we call onCompleted on the Subject. This finishes the notifications to all subscriptions and overrides the take operator in this case.
