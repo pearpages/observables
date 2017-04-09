@@ -59,3 +59,18 @@ AsyncSubject emits the last value of a sequence only if the sequence completes. 
 
 > AsyncSubject is convenient for asynchronous operations that return a single value, such as **Ajax** requests.
 
+### BehaviorSubject
+
+When an Observer subscribes to a BehaviorSubject, it receives the last emitted value and then all the subsequent values. BehaviorSubject requires that we pro- vide a starting value, so that all Observers will always receive a value when they subscribe to a BehaviorSubject.
+
+### ReplaySubject
+
+A ReplaySubject caches its values and re-emits them to any Observer that subscribes late to it. Unlike with AsyncSubject, the sequence doesn’t need to be completed for this to happen.
+
+Of course, to accomplish that behavior ReplaySubject caches all values in memory. To prevent it from using too much memory, we can limit the amount of data it stores by buffer size or window of time, or by passing particular parameters to the constructor.
+
+```js
+var subject = new Rx.ReplaySubject(2); // Buffer size of 2
+
+var subject = new Rx.ReplaySubject(null, 200); // Buffer size of 200ms
+```

@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <script src="../node_modules/rx/dist/rx.all.min.js"></script>
+    <script src="../node_modules/rx-dom/dist/rx.dom.min.js"></script>
+</head>
+
+<body>
+    <p>Behavior Subject</p>
+
+    <script>
+        var subject = new Rx.BehaviorSubject('<p>Waiting for content</p>');
+        subject.subscribe(function (result) {
+            document.body.innerHTML += result.response || result;
+        },
+            function (err) {
+                document.body.textContent = 'There was an error retrieving content';
+            });
+        Rx.DOM.get('/api/products.json').subscribe(subject);
+    </script>
+</body>
+
+</html>
