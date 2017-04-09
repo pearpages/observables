@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <script src="../node_modules/rx/dist/rx.all.min.js"></script>
+    <script src="../node_modules/rx-dom/dist/rx.dom.min.js"></script>
+</head>
+
+<body>
+    <p>Async Subject</p>
+
+    <script>
+        function appendData(data) {
+            document.getElementsByTagName('body')[0].innerHTML += '<p>'+data+'</p>';
+        }
+
+        function getProducts(url) {
+            var subject;
+
+            return Rx.Observable.create(function (observer) {
+                if (!subject) {
+                    subject = new Rx.AsyncSubject();
+                    Rx.DOM.get(url).subscribe(subject);
+                }
+                return subject.subscribe(observer);
+            })
+        }
+
+        var products = getProducts('/api/products.json');
+        // will trigger the request and recieve the response when read
+        products.subscribe(
+            function (result) { appendData('Result 1: ' + result.response); },
+            function (err) { console.error(err) }
+        );
+
+        // Will receive the result immediately because it's cached
+        setTimeout(function () {
+            products.subscribe(
+                function (result) { appendData('Result2: ' + result.response) },
+                function (err) { console.error(error) }
+            )
+        }, 5000);
+    </script>
+</body>
+
+</html>
